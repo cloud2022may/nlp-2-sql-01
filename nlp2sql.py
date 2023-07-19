@@ -21,7 +21,7 @@ def main():
         st.write("Please do not load any confidential or company data.")
         st.write("Please make sure that the column names or headers in csv has no spaces or special characters.")
 
-    input_api_key = st.text_input("Enter your OpenAI key here")
+    input_api_key = st.text_input("Enter your OpenAI key here", type="password")
     st.markdown(
                 '<p style="text-align:center">Get your Open AI API key <a href="https://platform.openai.com/account/api-keys">here</a></p>',
                 unsafe_allow_html = True
@@ -43,7 +43,7 @@ def main():
 
             with temp_db.connect() as conn:
                 result = conn.execute(text("select * from dataTable limit 5"))
-                st.write(result.all())
+                #st.write(result.all())
 
     nlp_text = prompt_input()
 
