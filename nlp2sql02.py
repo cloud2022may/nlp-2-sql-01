@@ -74,8 +74,10 @@ def main():
                     result = conn.execute(text(handle_response(response)))
 
                     df_result = result.all()
+                    df_pd = pd.DataFrame(df_result)
                     #st.write(result.all())
-                    st.write(pd.DataFrame(df_result))
+                    st.write(df_pd)
+                    #st.bar_chart(data = df_pd, columns = df_pd.columns)
             except:
                 st.write("An exception occured")
 
