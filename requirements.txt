@@ -1,0 +1,6 @@
+streamlit
+tempfile
+python-dotenv
+openai
+pandas
+sqlalchemy
