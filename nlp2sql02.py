@@ -68,18 +68,18 @@ def main():
             #handle_response(response)
             #st.write(response)
 
-            try:
+            #try:
 
-                with temp_db.connect() as conn:
-                    result = conn.execute(text(handle_response(response)))
+            with temp_db.connect() as conn:
+                result = conn.execute(text(handle_response(response)))
 
-                    df_result = result.all()
-                    df_pd = pd.DataFrame(df_result)
-                    #st.write(result.all())
-                    st.write(df_pd)
-                    #st.bar_chart(data = df_pd, columns = df_pd.columns)
-            except:
-                st.write("An exception occured")
+                df_result = result.all()
+                df_pd = pd.DataFrame(df_result)
+                #st.write(result.all())
+                st.write(df_pd)
+                #st.bar_chart(data = df_pd, columns = df_pd.columns)
+            #except:
+            #    st.write("An exception occured")
 
        
 
