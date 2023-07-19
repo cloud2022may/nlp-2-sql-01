@@ -36,7 +36,7 @@ def main():
             temp_file_path = temp_file.name
 
             df = pd.read_csv(temp_file_path)
-            #st.write(df.head(5))
+            st.write(df.head(5))
 
             temp_db = create_engine("sqlite:///:memory:", echo=True)
             data = df.to_sql(name = "dataTable", con = temp_db)
