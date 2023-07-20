@@ -4,3 +4,4 @@ python-dotenv
 openai
 pandas
 sqlalchemy
+plotly_express
