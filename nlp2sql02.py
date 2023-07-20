@@ -28,9 +28,10 @@ def main():
             )
     openai.api_key = input_api_key
 
-    st.write("Netflix titles dataset")
+    st.write("Sample Sales Data")
     
-    temp_file_path = "./netflix_titles.csv"
+    #temp_file_path = "./nlp-2-sql-01/sales_data_sample.csv"
+    temp_file_path = "./sales_data_sample.csv"
 
     df = pd.read_csv(temp_file_path)
     #st.write(df.head(5))
@@ -39,8 +40,8 @@ def main():
     temp_db = create_engine("sqlite:///:memory:", echo=True)
     data = df.to_sql(name = "dataTable", con = temp_db)
 
-    with temp_db.connect() as conn:
-        result = conn.execute(text("select * from dataTable limit 5"))
+    #with temp_db.connect() as conn:
+        #result = conn.execute(text("select * from dataTable limit 5"))
         #st.write(result.all())
 
     nlp_text = prompt_input()
@@ -69,9 +70,18 @@ def main():
             #st.write(response)
 
             #try:
+            st.write(text(handle_response(response)))
 
             with temp_db.connect() as conn:
-                result = conn.execute(text(handle_response(response)))
+
+                # replace all instances of 'r' (old) with 'e' (new)
+                query = handle_response(response)
+
+                query = query.replace("'", "'" )
+                #result = conn.execute(text(handle_response(response)))
+                #st.write(text(query))
+                result = conn.execute(text(query))
+                #result = conn.execute("SELECT  * FROM dataTable WHERE cast LIKE '%Mel%' ")
 
                 df_result = result.all()
                 df_pd = pd.DataFrame(df_result)
