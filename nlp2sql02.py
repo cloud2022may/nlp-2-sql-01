@@ -7,6 +7,7 @@ import pandas as pd
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy import text
+import plotly_express as px
 
 def main():
 
@@ -35,11 +36,55 @@ def main():
 
     df = pd.read_csv(temp_file_path)
     #st.write(df.head(5))
-    st.write(df)
+    #st.write(df)
 
     temp_db = create_engine("sqlite:///:memory:", echo=True)
     data = df.to_sql(name = "dataTable", con = temp_db)
 
+    #### sidebar
+    st.sidebar.header("Select your filter: ")
+
+    year = st.sidebar.multiselect(
+        "Select the year:",
+        options = df["YEAR_ID"].unique(),
+        default = df["YEAR_ID"].unique()
+
+    )
+
+    territory = st.sidebar.multiselect(
+        "Select the territory:",
+        options = df["TERRITORY"].unique(),
+        default = df["TERRITORY"].unique()
+
+    )
+
+    country = st.sidebar.multiselect(
+        "Select the country:",
+        options = df["COUNTRY"].unique(),
+        default = df["COUNTRY"].unique()
+
+    )
+
+     
+
+    product = st.sidebar.multiselect(
+        "Select the product:",
+        options = df["PRODUCTLINE"].unique(),
+        default = df["PRODUCTLINE"].unique()
+
+    )    
+ 
+    df_selection = df.query(
+        "YEAR_ID == @year & TERRITORY == @territory  & COUNTRY == @country  & PRODUCTLINE == @product "
+    )
+
+    st.dataframe(df_selection)
+
+    #### interactive plot
+    #interactive_plot(df)
+    interactive_plot(df_selection)
+
+    
     #with temp_db.connect() as conn:
         #result = conn.execute(text("select * from dataTable limit 5"))
         #st.write(result.all())
@@ -102,12 +147,18 @@ def main():
                 #st.bar_chart(chart_data)
                 if (len(df_pd.columns.values.tolist()) >= 2 ):
                     st.bar_chart(df_pd , y = df_pd.columns.values[1], x=df_pd.columns.values[0])
+                
             #except:
             #    st.write("An exception occured")
 
        
 
+def interactive_plot(df):
+    x_axis_val = st.selectbox('Select X-Axis Value', options= df.columns)
+    y_axis_val = st.selectbox('Select Y-Axis Value', options= df.columns)
 
+    plot = px.scatter(df, x = x_axis_val, y = y_axis_val)
+    st.plotly_chart(plot)
 
 
 def handle_response(response):
