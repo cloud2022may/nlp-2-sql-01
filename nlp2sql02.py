@@ -91,6 +91,13 @@ def main():
     #with temp_db.connect() as conn:
         #result = conn.execute(text("select * from dataTable limit 5"))
         #st.write(result.all())
+    with st.expander("Some sample queries"):
+        st.write("what are the total sales of each product in usa") 
+        st.write("Can you give the total sales by territory") 
+        st.write("what was the total sales in the second month of year 2004")
+        st.write("what was the total sales of motor cycles alone in the 4th month of year 2005")
+        st.write("which country shipped maximum number of ships in 2005")
+        st.write("which city in the USA shipped the least number of motorcycles in 2004")
 
     nlp_text = prompt_input()
 
