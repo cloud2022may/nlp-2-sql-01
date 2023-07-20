@@ -87,7 +87,21 @@ def main():
                 df_pd = pd.DataFrame(df_result)
                 #st.write(result.all())
                 st.write(df_pd)
-                #st.bar_chart(data = df_pd, columns = df_pd.columns)
+
+                # bar chart
+                col_names = [",".join( str(col) for col in df_pd.columns) ]
+                
+                chart_data = pd.DataFrame(
+                    df_pd,
+                    columns=col_names)
+                #st.write(df_pd.columns.values)
+                #st.write(df_pd.columns.values.tolist())
+                #st.write(col_names[0])
+                #st.bar_chart(data = df_pd, columns = df_pd.columns.values)
+                #st.bar_chart(data = df_pd.iloc[: , 0:])
+                #st.bar_chart(chart_data)
+                if (len(df_pd.columns.values.tolist()) >= 2 ):
+                    st.bar_chart(df_pd , y = df_pd.columns.values[1], x=df_pd.columns.values[0])
             #except:
             #    st.write("An exception occured")
 
