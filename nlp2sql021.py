@@ -9,6 +9,9 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 import plotly_express as px
 from pandasql import sqldf
+import pymysql
+#from mysql import connector
+
 
 def main():
 
@@ -16,6 +19,7 @@ def main():
 
     #openai.api_key = os.getenv("OPENAI_API_KEY")
     st.set_page_config(page_title = "Ask questions to your data")
+    st.header("Generative SQL")
     st.header("Ask questions to your data")
 
     with st.expander("About the app"):
@@ -40,54 +44,10 @@ def main():
     st.write(df)
 
     temp_db = create_engine("sqlite:///:memory:", echo=True)
-    data = df.to_sql(name = "dataTable", con = temp_db)
+    #my_conn = create_engine("mysql+mysqldb://usrid:password@localhost/my_db")
+    data = df.to_sql(name = "sales", con = temp_db)
 
-    #### sidebar
-    
-    
-    #st.sidebar.header("Select your filter: ")
-
-    #year = st.sidebar.multiselect(
-    #    "Select the year:",
-    #    options = df["YEAR_ID"].unique(),
-    #    default = df["YEAR_ID"].unique()
-
-    #)
-
-    #territory = st.sidebar.multiselect(
-    #    "Select the territory:",
-    #    options = df["TERRITORY"].unique(),
-    #    default = df["TERRITORY"].unique()
-
-    #)
-
-    #country = st.sidebar.multiselect(
-    #    "Select the country:",
-    #    options = df["COUNTRY"].unique(),
-    #    default = df["COUNTRY"].unique()
-
-    #)
-
-     
-
-    #product = st.sidebar.multiselect(
-    #    "Select the product:",
-    #    options = df["PRODUCTLINE"].unique(),
-    #    default = df["PRODUCTLINE"].unique()
-
-    #)    
- 
-    #df_selection = df.query(
-    #    "YEAR_ID == @year & TERRITORY == @territory  & COUNTRY == @country  & PRODUCTLINE == @product "
-    #)
-
-    #st.dataframe(df_selection)
-
-    #### interactive plot
-    #interactive_plot(df)
-    #interactive_plot(df_selection)
-    
-    
+       
 
     #with temp_db.connect() as conn:
         #result = conn.execute(text("select * from dataTable limit 5"))
@@ -101,6 +61,21 @@ def main():
         st.write("which city in the USA shipped the least number of motorcycles in 2004")
 
     nlp_text = prompt_input()
+    
+    # connection to database
+    db = pymysql.connect(host='database-1.cdatmsjowfie.us-east-1.rds.amazonaws.com',
+                         user='admin',
+                         password='awsmysql02',
+                         database="db01")
+    cursor = db.cursor()
+
+    # connect to mysql
+    #mysql_conn = connector.connect(
+    #  host="database-1.cdatmsjowfie.us-east-1.rds.amazonaws.com",
+    #  user="admin",
+    #  passwd="awsmysql02",
+    #  database="db01"
+    #)
 
     if nlp_text is not None and nlp_text != "":
         with st.spinner(text = "Analysis in progress..."):
@@ -108,7 +83,7 @@ def main():
         
 
             prompt = combine_prompts(df, nlp_text)
-            st.write(prompt) 
+            #st.write(prompt) 
 
             response = openai.Completion.create(
                 model = "text-davinci-003",
@@ -126,50 +101,48 @@ def main():
             #st.write(response)
 
             #try:
-            #st.write(text(handle_response(response)))
+            st.write(text(handle_response(response)))
             response_query = handle_response(response)
-            response_query = response_query.replace("dataTable", "df" )
+            response_query = response_query.replace("dataTable", "sales" )
 
             #pd_results = sqldf(response_query)
             #pd_results = sqldf("SELECT SUM(SALES) AS 2004_SALES FROM dataTable WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2004")
-            pd_results = sqldf("SELECT SUM(SALES) FROM df WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2004 UNION SELECT SUM(SALES)  FROM df WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2005")
-            st.write("Results from pandas query")
-            st.write(pd_results)
+            #pd_results = sqldf("SELECT SUM(SALES) FROM df WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2004 UNION SELECT SUM(SALES)  FROM df WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2005")
+            #st.write("Results from pandas query")
+            #st.write(pd_results)
 
             st.write("Results from OpenAI query")
-            with temp_db.connect() as conn:
 
-                # replace all instances of 'r' (old) with 'e' (new)
-                query = handle_response(response)
+            
+            query = handle_response(response)
 
-                query = query.replace("'", "'" )
-                #result = conn.execute(text(handle_response(response)))
-                #st.write(text(query))
-                result = conn.execute(text(query))
-                #result = conn.execute("SELECT  * FROM dataTable WHERE cast LIKE '%Mel%' ")
+            #query_result = pd.read_sql(query,mysql_conn)
 
-                df_result = result.all()
-                df_pd = pd.DataFrame(df_result)
-                #st.write(result.all())
-                st.write(df_pd)
 
-                # bar chart
-                col_names = [",".join( str(col) for col in df_pd.columns) ]
-                
-                chart_data = pd.DataFrame(
-                    df_pd,
-                    columns=col_names)
-                #st.write(df_pd.columns.values)
-                #st.write(df_pd.columns.values.tolist())
-                #st.write(col_names[0])
-                #st.bar_chart(data = df_pd, columns = df_pd.columns.values)
-                #st.bar_chart(data = df_pd.iloc[: , 0:])
-                #st.bar_chart(chart_data)
-                if (len(df_pd.columns.values.tolist()) >= 2 ):
-                    st.bar_chart(df_pd , y = df_pd.columns.values[1], x=df_pd.columns.values[0])
-                
-            #except:
-            #    st.write("An exception occured")
+            cursor.execute(query)
+            query_result = cursor.fetchall()
+            #query_result = dict(zip(cursor.column_names, cursor.fetchall()))
+
+            df_query_result = pd.DataFrame(query_result)
+            #st.write(result.all())
+            st.write(df_query_result)
+
+            #st.write(df_query_result.columns.values[0])
+            #st.write(df_query_result.columns.values[1])
+            
+            #st.write(df_query_result.columns.values)
+            
+            
+
+            if (len(df_query_result.columns.values.tolist()) >= 2 ):
+                    columns = ["column0", "column1"]
+                    df_query_result.columns = columns
+                    #st.bar_chart(df_query_result , y = "column1", x="column0")
+                    st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
+                    #st.bar_chart(df_query_result , y = df_query_result[df_query_result.columns[1]], x=df_query_result[df_query_result.columns[0]])
+                    #st.bar_chart(df_query_result , y = df_query_result[1], x=df_query_result[0])
+
+            
 
        
 
@@ -193,7 +166,7 @@ def handle_response(response):
 def create_table_definition(df):
     prompt = """ sqlite SQL table, with its properties:
     #
-    # dataTable({})
+    # sales({})
     #
     """.format(",".join( str(col) for col in df.columns  ))
 

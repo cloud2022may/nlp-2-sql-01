@@ -5,3 +5,8 @@ openai
 pandas
 sqlalchemy
 plotly_express
+pandasql
+PyMySQL
+#mysql
+#mysql-connector-python
+
