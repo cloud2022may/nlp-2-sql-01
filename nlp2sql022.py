@@ -56,8 +56,8 @@ def main():
     
     # connection to database
     db = pymysql.connect(host='database-1.cdatmsjowfie.us-east-1.rds.amazonaws.com',
-                         user='admin',
-                         password='awsmysql02',
+                         user='mysqluser',
+                         password='mysqluser',
                          database="db01")
     cursor = db.cursor()
 
@@ -77,7 +77,8 @@ def main():
                 top_p = 1.0,
                 frequency_penalty = 0,
                 presence_penalty = 0,
-                stop = ['#',';']
+                #stop = ['#',';']
+                stop = ['#']
 
             )
 
@@ -85,9 +86,12 @@ def main():
             #st.write(response)
 
             #try:
-            st.write(text(handle_response(response)))
+            #st.write(text(handle_response(response)))
             response_query = handle_response(response)
             response_query = response_query.replace("dataTable", "sales" )
+            #response_query = response_query.replace("SELECT", "\n; SELECT" )
+            #response_query = response_query[ 2: ]
+            st.write(response_query)
 
             st.write("Results from OpenAI query")
 
@@ -95,6 +99,12 @@ def main():
             query = handle_response(response)
 
             response_query_checked = checkforSQLInjection(response_query)
+
+            ##### logging 
+            with open("log.txt","a") as file:
+
+                file.write(f"\n########\nuser input: {nlp_text} \n" )
+                file.write(f"generated query: {response_query} \n" )
 
             if response_query_checked != "stop":
 
@@ -115,7 +125,7 @@ def main():
             
 def checkforSQLInjection(response_query):
     # check list
-    check_list = ["insert", "delete","update", "password", "EXEC", "sp_executesql", "sp_execute","sp","1==1","OR 1==1","OR '1'='1'"]
+    check_list = ["insert", "delete","update", "password", "EXEC", "sp_executesql", "sp_execute","sp","1==1","OR 1==1","OR '1'='1'", "hacking", "script", "network"]
 
     # using list comprehension
     # checking if string contains list element
@@ -148,7 +158,7 @@ def handle_response(response):
 
 
 def create_table_definition(df):
-    prompt = """ mysql SQL table, with its properties:
+    prompt = """ mssql SQL table, with its properties:
     #
     # dataTable({})
     #

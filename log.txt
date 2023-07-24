@@ -1,0 +1,252 @@
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM dataTable
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE 
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM dataTable
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE 
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM dataTable
+GROUP BY TERRITORY 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM dataTable 
+
+########
+user input: which country shipped maximum number of ships in 2005 
+generated query: SELECT  COUNTRY, COUNT(*) AS SHIP_COUNT
+FROM dataTable
+WHERE YEAR_ID = 2005
+GROUP BY COUNTRY
+ORDER BY SHIP_COUNT DESC
+LIMIT 1 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM dataTable 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM dataTable; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM dataTable; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM dataTable
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM dataTable; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: 
+; SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+
+; SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+
+; SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM sales; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: ; SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+
+; SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+
+; SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM sales; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query:  SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+
+; SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+
+; SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM sales; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query:  SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+
+; SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+
+; SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM sales; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query:  SELECT  SUM(SALES) AS 2004_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2004
+
+
+; SELECT SUM(SALES) AS 2005_MOTORCYCLE_SALES
+FROM sales
+WHERE PRODUCTLINE = 'Motorcycles'
+AND YEAR_ID = 2005
+
+
+; SELECT (2005_MOTORCYCLE_SALES - 2004_MOTORCYCLE_SALES) AS DIFFERENCE
+FROM sales; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query:  SELECT  SUM(SALES) AS '2004 Motorcycle Sales',
+       (
+; SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') AS '2005 Motorcycle Sales',
+       (
+; SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') - SUM(SALES) AS 'Difference'
+FROM sales
+WHERE YEAR_ID = 2004
+  AND PRODUCTLINE = 'Motorcycles'; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: LECT  SUM(SALES) AS '2004 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') AS '2005 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') - SUM(SALES) AS 'Difference'
+FROM sales
+WHERE YEAR_ID = 2004
+  AND PRODUCTLINE = 'Motorcycles'; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS '2004 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') AS '2005 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') - SUM(SALES) AS 'Difference'
+FROM sales
+WHERE YEAR_ID = 2004
+  AND PRODUCTLINE = 'Motorcycles'; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS '2004 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') AS '2005 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') - SUM(SALES) AS 'Difference'
+FROM sales
+WHERE YEAR_ID = 2004
+  AND PRODUCTLINE = 'Motorcycles'; 
