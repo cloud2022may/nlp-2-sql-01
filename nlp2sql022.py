@@ -10,7 +10,7 @@ from sqlalchemy import text
 import plotly_express as px
 from pandasql import sqldf
 import pymysql
-#from mysql import connector
+
 
 
 def main():
@@ -43,15 +43,7 @@ def main():
     #st.write(df.head(5))
     st.write(df)
 
-    #temp_db = create_engine("sqlite:///:memory:", echo=True)
-    #my_conn = create_engine("mysql+mysqldb://usrid:password@localhost/my_db")
-    #data = df.to_sql(name = "sales", con = temp_db)
-
-       
-
-    #with temp_db.connect() as conn:
-        #result = conn.execute(text("select * from dataTable limit 5"))
-        #st.write(result.all())
+    
     with st.expander("Some sample queries"):
         st.write("what are the total sales of each product in usa") 
         st.write("Can you give the total sales by territory") 
@@ -68,14 +60,6 @@ def main():
                          password='awsmysql02',
                          database="db01")
     cursor = db.cursor()
-
-    # connect to mysql
-    #mysql_conn = connector.connect(
-    #  host="database-1.cdatmsjowfie.us-east-1.rds.amazonaws.com",
-    #  user="admin",
-    #  passwd="awsmysql02",
-    #  database="db01"
-    #)
 
     if nlp_text is not None and nlp_text != "":
         with st.spinner(text = "Analysis in progress..."):
@@ -105,45 +89,45 @@ def main():
             response_query = handle_response(response)
             response_query = response_query.replace("dataTable", "sales" )
 
-            #pd_results = sqldf(response_query)
-            #pd_results = sqldf("SELECT SUM(SALES) AS 2004_SALES FROM dataTable WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2004")
-            #pd_results = sqldf("SELECT SUM(SALES) FROM df WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2004 UNION SELECT SUM(SALES)  FROM df WHERE PRODUCTLINE = 'Motorcycles' AND YEAR_ID = 2005")
-            #st.write("Results from pandas query")
-            #st.write(pd_results)
-
             st.write("Results from OpenAI query")
 
             
             query = handle_response(response)
 
-            #query_result = pd.read_sql(query,mysql_conn)
+            response_query_checked = checkforSQLInjection(response_query)
 
+            if response_query_checked != "stop":
 
-            cursor.execute(response_query)
-            query_result = cursor.fetchall()
-            #query_result = dict(zip(cursor.column_names, cursor.fetchall()))
+                cursor.execute(response_query_checked)
+                query_result = cursor.fetchall()
+                #query_result = dict(zip(cursor.column_names, cursor.fetchall()))
 
-            df_query_result = pd.DataFrame(query_result)
-            #st.write(result.all())
-            st.write(df_query_result)
-
-            #st.write(df_query_result.columns.values[0])
-            #st.write(df_query_result.columns.values[1])
+                df_query_result = pd.DataFrame(query_result)
+                #st.write(result.all())
+                st.write(df_query_result)
+                
+                if ( len(df_query_result.columns.values.tolist()) == 2 ):
+                        columns = ["column0", "column1"]
+                        df_query_result.columns = columns
+                        
+                        st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
+                        
             
-            #st.write(df_query_result.columns.values)
-            
-            
+def checkforSQLInjection(response_query):
+    # check list
+    check_list = ["insert", "delete","update", "password", "EXEC", "sp_executesql", "sp_execute","sp","1==1","OR 1==1","OR '1'='1'"]
 
-            if (len(df_query_result.columns.values.tolist()) >= 2 ):
-                    columns = ["column0", "column1"]
-                    df_query_result.columns = columns
-                    #st.bar_chart(df_query_result , y = "column1", x="column0")
-                    st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
-                    #st.bar_chart(df_query_result , y = df_query_result[df_query_result.columns[1]], x=df_query_result[df_query_result.columns[0]])
-                    #st.bar_chart(df_query_result , y = df_query_result[1], x=df_query_result[0])
+    # using list comprehension
+    # checking if string contains list element
+    res = any(ele in response_query for ele in check_list)
 
-            
-
+    if res==1:
+        st.write("String contains some invalid tokens")
+        return "stop"
+    else:
+        #print("String does not contains the list element")
+        return response_query
+    
        
 
 def interactive_plot(df):
@@ -173,7 +157,7 @@ def create_table_definition(df):
     return prompt
 
 def prompt_input():
-    user_question = st.text_input("Enter your query here: ")
+    user_question = st.text_input("Enter your query here: ", max_chars=120)
 
     return user_question
 
