@@ -112,13 +112,20 @@ def main():
                 query_result = cursor.fetchall()
                 #query_result = dict(zip(cursor.column_names, cursor.fetchall()))
 
+                # Fetch the column names from the cursor.description
+                columns = [col[0] for col in cursor.description]
+                #st.write(columns)
+
                 df_query_result = pd.DataFrame(query_result)
+                df_query_result.columns = columns
+
                 #st.write(result.all())
+
                 st.write(df_query_result)
                 
                 if ( len(df_query_result.columns.values.tolist()) == 2 ):
-                        columns = ["column0", "column1"]
-                        df_query_result.columns = columns
+                        #columns = ["column0", "column1"]
+                        #df_query_result.columns = columns
                         
                         st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
                         

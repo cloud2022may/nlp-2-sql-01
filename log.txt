@@ -250,3 +250,124 @@ generated query: SELECT  SUM(SALES) AS '2004 Motorcycle Sales',
 FROM sales
 WHERE YEAR_ID = 2004
   AND PRODUCTLINE = 'Motorcycles'; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what is the difference between the total  motorcycle sales in year 2004 and 2005 
+generated query: SELECT  SUM(SALES) AS '2004 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') AS '2005 Motorcycle Sales',
+       (SELECT SUM(SALES)
+        FROM sales
+        WHERE YEAR_ID = 2005
+          AND PRODUCTLINE = 'Motorcycles') - SUM(SALES) AS 'Difference'
+FROM sales
+WHERE YEAR_ID = 2004
+  AND PRODUCTLINE = 'Motorcycles'; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
