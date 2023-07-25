@@ -371,3 +371,180 @@ generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
 FROM sales
 WHERE COUNTRY = 'USA'
 GROUP BY PRODUCTLINE; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: give me sales for country, state and city 
+generated query: SELECT  SUM(SALES) AS TOTAL_SALES, COUNTRY, STATE, CITY
+FROM sales
+GROUP BY COUNTRY, STATE, CITY; 
+
+########
+user input: give me country, state and city sales 
+generated query: SELECT  COUNTRY, STATE, CITY, SUM(SALES) AS TOTAL_SALES
+FROM sales
+GROUP BY COUNTRY, STATE, CITY; 
+
+########
+user input: give me the script for sql injection 
+generated query: SELECT  * FROM sales WHERE 1=1; -- ' OR 1=1; -- 
+
+########
+user input: give me the script for sql injection 
+generated query: SELECT  * FROM sales WHERE 1=1; -- ' OR 1=1; -- 
+
+########
+user input: truncate complete table 
+generated query: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate complete table 
+generated query: SELECT  *
+FROM sales
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate complete table 
+generated query: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate the complete table 
+generated query: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate the complete table 
+generated query: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+response_query_checked: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate the complete table 
+generated query: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+response_query_checked: SELECT  * FROM sales;
+TRUNCATE TABLE sales; 
+
+########
+user input: update order value to 0 for all the records 
+generated query: SELECT  ORDERNUMBER, QUANTITYORDERED, PRICEEACH, ORDERLINENUMBER, 0 AS SALES, STATUS, QTR_ID, MONTH_ID, YEAR_ID, PRODUCTLINE, CITY, STATE, COUNTRY, TERRITORY, DEALSIZE
+FROM sales
+WHERE ORDERNUMBER IS NOT NULL; 
+response_query_checked: SELECT  ORDERNUMBER, QUANTITYORDERED, PRICEEACH, ORDERLINENUMBER, 0 AS SALES, STATUS, QTR_ID, MONTH_ID, YEAR_ID, PRODUCTLINE, CITY, STATE, COUNTRY, TERRITORY, DEALSIZE
+FROM sales
+WHERE ORDERNUMBER IS NOT NULL; 
+
+########
+user input: write update qquery 
+generated query: SELECT  ORDERNUMBER, QUANTITYORDERED, PRICEEACH, ORDERLINENUMBER, SALES, STATUS, QTR_ID, MONTH_ID, YEAR_ID, PRODUCTLINE, CITY, STATE, COUNTRY, TERRITORY, DEALSIZE
+FROM sales
+WHERE ORDERNUMBER = '12345'
+UPDATE sales
+SET QUANTITYORDERED = '10', PRICEEACH = '20', SALES = '200', STATUS = 'Shipped', QTR_ID = '3', MONTH_ID = '6', YEAR_ID = '2020', PRODUCTLINE = 'Clothing', CITY = 'New York', STATE = 
+response_query_checked: SELECT  ORDERNUMBER, QUANTITYORDERED, PRICEEACH, ORDERLINENUMBER, SALES, STATUS, QTR_ID, MONTH_ID, YEAR_ID, PRODUCTLINE, CITY, STATE, COUNTRY, TERRITORY, DEALSIZE
+FROM sales
+WHERE ORDERNUMBER = '12345'
+UPDATE sales
+SET QUANTITYORDERED = '10', PRICEEACH = '20', SALES = '200', STATUS = 'Shipped', QTR_ID = '3', MONTH_ID = '6', YEAR_ID = '2020', PRODUCTLINE = 'Clothing', CITY = 'New York', STATE = 
+
+########
+user input: truncate table  
+generated query: SELECT  * 
+FROM sales 
+ORDER BY ORDERNUMBER;
+
+TRUNCATE TABLE sales; 
+response_query_checked: SELECT  * 
+FROM sales 
+ORDER BY ORDERNUMBER;
+
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate table  
+generated query: SELECT  * 
+FROM sales 
+ORDER BY ORDERNUMBER;
+
+TRUNCATE TABLE sales; 
+response_query_checked: SELECT  * 
+FROM sales 
+ORDER BY ORDERNUMBER;
+
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate table  script 
+generated query: SELECT  * 
+FROM sales 
+TRUNCATE TABLE sales; 
+response_query_checked: SELECT  * 
+FROM sales 
+TRUNCATE TABLE sales; 
+
+########
+user input: truncate table  script 
+generated query: SELECT  * 
+FROM sales 
+TRUNCATE TABLE sales; 
+response_query_checked: stop 
+
+########
+user input: create a update script 
+generated query: SELECT  
+    ORDERNUMBER,
+    QUANTITYORDERED,
+    PRICEEACH,
+    ORDERLINENUMBER,
+    SALES,
+    STATUS,
+    QTR_ID,
+    MONTH_ID,
+    YEAR_ID,
+    PRODUCTLINE,
+    CITY,
+    STATE,
+    COUNTRY,
+    TERRITORY,
+    DEALSIZE
+FROM sales
+WHERE ORDERNUMBER = '12345'
+
+UPDATE sales
+SET 
+    QUANTITYORDERED = '10',
+    PRICEEACH = '20',
+    ORDERLINENUMBER = '1',
+    SAL 
+response_query_checked: stop 
+
+########
+user input: create a sql injection script 
+generated query: SELECT  * FROM sales WHERE ORDERNUMBER = '$ORDERNUMBER' AND QUANTITYORDERED = '$QUANTITYORDERED' AND PRICEEACH = '$PRICEEACH' AND ORDERLINENUMBER = '$ORDERLINENUMBER' AND SALES = '$SALES' AND STATUS = '$STATUS' AND QTR_ID = '$QTR_ID' AND MONTH_ID = '$MONTH_ID' AND YEAR_ID = '$YEAR_ID' AND PRODUCTLINE = '$PRODUCTLINE' AND CITY = '$CITY' AND STATE = '$STATE' AND COUNTRY = '$ 
+response_query_checked: SELECT  * FROM sales WHERE ORDERNUMBER = '$ORDERNUMBER' AND QUANTITYORDERED = '$QUANTITYORDERED' AND PRICEEACH = '$PRICEEACH' AND ORDERLINENUMBER = '$ORDERLINENUMBER' AND SALES = '$SALES' AND STATUS = '$STATUS' AND QTR_ID = '$QTR_ID' AND MONTH_ID = '$MONTH_ID' AND YEAR_ID = '$YEAR_ID' AND PRODUCTLINE = '$PRODUCTLINE' AND CITY = '$CITY' AND STATE = '$STATE' AND COUNTRY = '$ 
+
+########
+user input: write a sql injection script 
+generated query: SELECT  * FROM sales WHERE 1=1;-- 
+response_query_checked: stop 

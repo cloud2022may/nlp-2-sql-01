@@ -93,7 +93,7 @@ def main():
             #response_query = response_query[ 2: ]
             st.write(response_query)
 
-            st.write("Results from OpenAI query")
+            st.write("Results ")
 
             
             query = handle_response(response)
@@ -105,7 +105,7 @@ def main():
 
                 file.write(f"\n########\nuser input: {nlp_text} \n" )
                 file.write(f"generated query: {response_query} \n" )
-
+                file.write(f"response_query_checked: {response_query_checked} \n")
             if response_query_checked != "stop":
 
                 cursor.execute(response_query_checked)
@@ -123,7 +123,7 @@ def main():
 
                 st.write(df_query_result)
                 
-                if ( len(df_query_result.columns.values.tolist()) == 2 ):
+                if ( len(df_query_result.columns.values.tolist()) >= 2 ):
                         #columns = ["column0", "column1"]
                         #df_query_result.columns = columns
                         
@@ -132,14 +132,14 @@ def main():
             
 def checkforSQLInjection(response_query):
     # check list
-    check_list = ["insert", "delete","update", "password", "EXEC", "sp_executesql", "sp_execute","sp","1==1","OR 1==1","OR '1'='1'", "hacking", "script", "network"]
+    check_list = ["insert", "delete", "truncate", "update", "password", "EXEC", "sp_executesql", "sp_execute","sp","1==1", "1=1","OR 1==1","OR '1'='1'", "OR 1=1","hacking", "script", "network"]
 
     # using list comprehension
     # checking if string contains list element
-    res = any(ele in response_query for ele in check_list)
+    #res = any(ele.lower() in response_query for ele in check_list)
 
-    if res==1:
-        st.write("String contains some invalid tokens")
+    if any(ele.lower() in response_query.lower() for ele in check_list):
+        st.write("Please check your query contains some invalid tokens")
         return "stop"
     else:
         #print("String does not contains the list element")
