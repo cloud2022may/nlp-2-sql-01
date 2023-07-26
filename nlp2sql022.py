@@ -23,17 +23,29 @@ def main():
     st.header("Ask questions to your data")
 
     with st.expander("About the app"):
-        st.write("This is an app through which you can ask questions to your data in natural language.")
+        st.write("Ask questions to your data in natural language")
         #st.write("Please do not load any confidential or company data.")
         #st.write("Please make sure that the column names or headers in csv has no spaces or special characters.")
 
-    input_api_key = st.text_input("Enter your OpenAI key here", type="password")
-    st.markdown(
-                '<p style="text-align:center">Get your Open AI API key <a href="https://platform.openai.com/account/api-keys">here</a></p>',
-                unsafe_allow_html = True
-            )
-    openai.api_key = input_api_key
+    with st.expander("OpenAI key"):
+        input_api_key = st.text_input("Enter your OpenAI key here", type="password")
+        st.markdown(
+                    '<p style="text-align:center">Get your Open AI API key <a href="https://platform.openai.com/account/api-keys">here</a></p>',
+                    unsafe_allow_html = True
+                )
+        openai.api_key = input_api_key
 
+    #### sidebar
+    st.sidebar.header("Select your parameters: ")
+
+    model_name_option = st.sidebar.selectbox(
+        'Model',
+        ('text-davinci-003', 'text-davinci-002' )) #, 'davinci', 'curie', 'babbage', 'ada') )
+
+    temperature_slider = st.sidebar.slider('Temperature', 0.0, 1.0, 0.0)    
+
+    max_tokens_slider = st.sidebar.slider('Maximum no of tokens', 0, 300, 150)
+    
     st.write("Sample Sales Data")
     
     #temp_file_path = "./nlp-2-sql-01/sales_data_sample.csv"
@@ -70,10 +82,10 @@ def main():
             #st.write(prompt) 
 
             response = openai.Completion.create(
-                model = "text-davinci-003",
+                model = model_name_option, #"text-davinci-003",
                 prompt = prompt,
-                temperature = 0,
-                max_tokens = 150,
+                temperature = temperature_slider ,#0,
+                max_tokens = max_tokens_slider, #150,
                 top_p = 1.0,
                 frequency_penalty = 0,
                 presence_penalty = 0,
@@ -122,13 +134,23 @@ def main():
                 #st.write(result.all())
 
                 st.write(df_query_result)
+
+                #interactive_plot(df_query_result)
                 
                 if ( len(df_query_result.columns.values.tolist()) >= 2 ):
                         #columns = ["column0", "column1"]
                         #df_query_result.columns = columns
                         
                         st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
-                        
+
+                
+def interactive_plot(df):
+    #x_axis_val = st.selectbox('Select X-Axis Value', options= df.columns)
+    #y_axis_val = st.selectbox('Select Y-Axis Value', options= df.columns)
+
+    #plot = px.bar(df, x = x_axis_val, y = y_axis_val, orientation='v')
+    plot = px.bar(df, x = df.columns.values[0], y = df.columns.values[1], orientation='v')
+    st.plotly_chart(plot)                        
             
 def checkforSQLInjection(response_query):
     # check list
@@ -139,7 +161,7 @@ def checkforSQLInjection(response_query):
     #res = any(ele.lower() in response_query for ele in check_list)
 
     if any(ele.lower() in response_query.lower() for ele in check_list):
-        st.write("Please check your query contains some invalid tokens")
+        st.write("Please check your query as it seems to contain some invalid tokens")
         return "stop"
     else:
         #print("String does not contains the list element")

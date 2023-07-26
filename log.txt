@@ -548,3 +548,560 @@ response_query_checked: SELECT  * FROM sales WHERE ORDERNUMBER = '$ORDERNUMBER' 
 user input: write a sql injection script 
 generated query: SELECT  * FROM sales WHERE 1=1;-- 
 response_query_checked: stop 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+response_query_checked: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  sales.totalSALES, sales.totalSALES_BY_TERRITORY, sales.totalSALES_BY_COUNTRY, sales.totalSALES_BY_STATE, sales.totalSALES_BY_COUNTRY_COUNTRY, sales.totalSALES_BY_STATE_COUNTRY, sales.totalSALES_BY_COUNTRY_STATE, sales.totalSALES_BY_COUNTRY_STATE_COUNTRY, sales.totalSALES_BY_COUNTRY_STATE_COUNTRY_COUNTRY, sales.totalSALES_BY_COUNTRY_STATE_C 
+response_query_checked: SELECT  sales.totalSALES, sales.totalSALES_BY_TERRITORY, sales.totalSALES_BY_COUNTRY, sales.totalSALES_BY_STATE, sales.totalSALES_BY_COUNTRY_COUNTRY, sales.totalSALES_BY_STATE_COUNTRY, sales.totalSALES_BY_COUNTRY_STATE, sales.totalSALES_BY_COUNTRY_STATE_COUNTRY, sales.totalSALES_BY_COUNTRY_STATE_COUNTRY_COUNTRY, sales.totalSALES_BY_COUNTRY_STATE_C 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The query is executed by the following SQL statement:
+
+SELECT SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The result is:
+
+The query is executed by the following SQL statement:
+
+SELECT SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The result is:
+
+The query is executed by the following SQL statement:
+
+SELECT SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The result is:
+
+The query is executed by the following SQL statement:
+
+SELECT 
+response_query_checked: stop 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) FROM sales
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT 
+response_query_checked: SELECT  SUM(SALES) FROM sales
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT SUM(SALES) FROM sales
+
+The result is:
+
+SUM(SALES)
+
+The SQL query is:
+
+SELECT 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) FROM sales WHERE territory = 'North America'
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+ 
+response_query_checked: SELECT  SUM(SALES) FROM sales WHERE territory = 'North America'
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+ 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+response_query_checked: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+response_query_checked: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The query is executed by the following SQL statement:
+
+SELECT SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The result is:
+
+The query is executed by the following SQL statement:
+
+SELECT SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The result is:
+
+The query is executed by the following SQL statement:
+
+SELECT SUM(SALES) FROM sales WHERE TERRITORY = 'US'
+
+The result is:
+
+The query is executed by the following SQL statement:
+
+SELECT 
+response_query_checked: stop 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) FROM sales WHERE territory = 'North America'
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+ 
+response_query_checked: SELECT  SUM(SALES) FROM sales WHERE territory = 'North America'
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+ 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+response_query_checked: SELECT  SUM(SALES) AS TOTAL_SALES, TERRITORY
+FROM sales
+GROUP BY TERRITORY
+     
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  SUM(SALES) FROM sales WHERE territory = 'North America'
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+ 
+response_query_checked: SELECT  SUM(SALES) FROM sales WHERE territory = 'North America'
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+The following is a sample of the output:
+
+ 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS TotalSalesByTerritory FROM sales GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS TotalSalesByTerritory FROM sales GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+response_query_checked: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+response_query_checked: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+response_query_checked: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+response_query_checked: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+response_query_checked: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+
+########
+user input: what are the total sales of each product in usa 
+generated query: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
+response_query_checked: SELECT  PRODUCTLINE, SUM(SALES) AS TOTAL_SALES
+FROM sales
+WHERE COUNTRY = 'USA'
+GROUP BY PRODUCTLINE; 
