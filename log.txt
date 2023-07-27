@@ -1176,3 +1176,21 @@ GROUP BY TERRITORY;
 response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
 FROM sales
 GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+
+########
+user input: Can you give the total sales by territory 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY; 

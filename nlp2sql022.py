@@ -234,11 +234,11 @@ def combine_prompts(df, query_prompt):
     return definition + query_init_string
 
 def create_describe_prompt(df):
-    prompt = """ can you describe the below data in a textual form:
+    prompt = """ 
     #
-    # ({})
+    # data: {}
     #
-    # can you also state your assumptions and write a explanation about the data
+    # can you describe the above data in a textual form and then state any assumptions and write a explanation or analysis about the data
     """.format(df)
 
     return prompt
