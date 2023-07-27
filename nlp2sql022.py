@@ -10,6 +10,7 @@ from sqlalchemy import text
 import plotly_express as px
 from pandasql import sqldf
 import pymysql
+import time
 
 
 
@@ -56,7 +57,7 @@ def main():
     st.write(df)
 
     
-    with st.expander("Some sample queries"):
+    with st.expander("Ask anything or try an example"):
         st.write("what are the total sales of each product in usa") 
         st.write("Can you give the total sales by territory") 
         st.write("what was the total sales in the second month of year 2004")
@@ -143,6 +144,32 @@ def main():
                         
                         st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
 
+                ##### describe data in text
+                describe_prompt = create_describe_prompt(df_query_result)
+
+                #prompt = combine_prompts(df, nlp_text)
+                #st.write(prompt) 
+                time.sleep(20)
+
+                des_response = openai.Completion.create(
+                    model = model_name_option, #"text-davinci-003",
+                    prompt = describe_prompt,
+                    temperature = temperature_slider ,#0,
+                    max_tokens = max_tokens_slider, #150,
+                    top_p = 1.0,
+                    frequency_penalty = 0,
+                    presence_penalty = 0,
+                    #stop = ['#',';']
+                    stop = ['#']
+
+                )
+
+                #handle_response(response)
+                st.write(des_response['choices'][0]['text'])
+
+            
+
+
                 
 def interactive_plot(df):
     #x_axis_val = st.selectbox('Select X-Axis Value', options= df.columns)
@@ -154,14 +181,14 @@ def interactive_plot(df):
             
 def checkforSQLInjection(response_query):
     # check list
-    check_list = ["insert", "delete", "truncate", "update", "password", "EXEC", "sp_executesql", "sp_execute","sp","1==1", "1=1","OR 1==1","OR '1'='1'", "OR 1=1","hacking", "script", "network"]
+    check_list = ["insert", "delete", "truncate", "update", "password", "EXEC", "sp_executesql", "sp_execute","sp", 'grant', 'revoke',"1==1", "1=1","OR 1==1","OR '1'='1'", "OR 1=1","hacking", "script", "network"]
 
     # using list comprehension
     # checking if string contains list element
     #res = any(ele.lower() in response_query for ele in check_list)
 
     if any(ele.lower() in response_query.lower() for ele in check_list):
-        st.write("Please check your query as it seems to contain some invalid tokens")
+        st.error("Please check your query as it seems to contain some invalid tokens")
         return "stop"
     else:
         #print("String does not contains the list element")
@@ -205,6 +232,16 @@ def combine_prompts(df, query_prompt):
     query_init_string = f"### A query to answer: {query_prompt}\nSELECT"
 
     return definition + query_init_string
+
+def create_describe_prompt(df):
+    prompt = """ can you describe the below data in a textual form:
+    #
+    # ({})
+    #
+    # can you also state your assumptions and write a explanation about the data
+    """.format(df)
+
+    return prompt
 
 
 if __name__ == '__main__':
