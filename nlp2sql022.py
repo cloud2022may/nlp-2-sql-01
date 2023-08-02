@@ -12,11 +12,17 @@ from pandasql import sqldf
 import pymysql
 import time
 
-
+def getExplanationButtonCallback():
+    st.write("Button clicked")
 
 def main():
 
     load_dotenv()
+
+    # initialize session state
+    if "load_state" not in st.session_state:
+        st.session_state.load_state = False
+
 
     #openai.api_key = os.getenv("OPENAI_API_KEY")
     st.set_page_config(page_title = "Ask questions to your data")
@@ -58,6 +64,7 @@ def main():
 
     
     with st.expander("Ask anything or try an example"):
+        
         st.write("what are the total sales of each product in usa") 
         st.write("Can you give the total sales by territory") 
         st.write("what was the total sales in the second month of year 2004")
@@ -73,6 +80,8 @@ def main():
                          password='mysqluser',
                          database="db01")
     cursor = db.cursor()
+
+
 
     if nlp_text is not None and nlp_text != "":
         with st.spinner(text = "Analysis in progress..."):
@@ -138,39 +147,67 @@ def main():
 
                 #interactive_plot(df_query_result)
                 
-                if ( len(df_query_result.columns.values.tolist()) >= 2 ):
+                #if ( len(df_query_result.columns.values.tolist()) >= 2 ):
                         #columns = ["column0", "column1"]
                         #df_query_result.columns = columns
                         
-                        st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
+                        #st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
 
-                ##### describe data in text
-                describe_prompt = create_describe_prompt(df_query_result)
+                #opt = st.radio('Plot type:', ['Bar', 'Pie'])
+                #if opt == 'Bar':
+                #    fig = px.bar(df_query_result, x = df_query_result.columns.values[0], y = df_query_result.columns.values[1] , title="Bar Chart")
+                #    st.plotly_chart(fig)
+                #else:
+                #    fig = px.pie(df_query_result, names = df_query_result.columns.values[0], values = df_query_result.columns.values[1] , title="Pie Chart")
+                #    st.plotly_chart(fig)
 
-                #prompt = combine_prompts(df, nlp_text)
-                #st.write(prompt) 
-                time.sleep(20)
+                tab1, tab2, tab3 = st.tabs(["📈 Bar Chart", "📈 Pie Chart", "🗃 Data"])
 
-                des_response = openai.Completion.create(
-                    model = model_name_option, #"text-davinci-003",
-                    prompt = describe_prompt,
-                    temperature = temperature_slider ,#0,
-                    max_tokens = max_tokens_slider, #150,
-                    top_p = 1.0,
-                    frequency_penalty = 0,
-                    presence_penalty = 0,
-                    #stop = ['#',';']
-                    stop = ['#']
+                tab1.fig = px.bar(df_query_result, x = df_query_result.columns.values[0], y = df_query_result.columns.values[1] , title="Bar Chart")
+                tab1.plotly_chart(tab1.fig)
 
-                )
+                tab2.fig = px.pie(df_query_result, names = df_query_result.columns.values[0], values = df_query_result.columns.values[1] , title="Pie Chart")
+                tab2.plotly_chart(tab2.fig)
 
-                #handle_response(response)
-                st.write(des_response['choices'][0]['text'])
-
-            
+                tab3.dataframe(df_query_result)
 
 
-                
+
+
+    getExp = st.button('Fetch Explanation', on_click=getExplanationButtonCallback) 
+
+    if getExp or st.session_state.load_state:
+
+        st.session_state.load_state = True
+
+        with st.spinner(text = "Analysis in progress..."):
+        
+            ##### describe data in text
+            describe_prompt = create_describe_prompt(df_query_result)
+
+            prompt = combine_prompts(df, nlp_text)
+            #st.write(prompt) 
+            time.sleep(20)
+
+            des_response = openai.Completion.create(
+                model = model_name_option, #"text-davinci-003",
+                prompt = describe_prompt,
+                temperature = temperature_slider ,#0,
+                max_tokens = max_tokens_slider, #150,
+                top_p = 1.0,
+                frequency_penalty = 0,
+                presence_penalty = 0,
+                #stop = ['#',';']
+                stop = ['#']
+
+            )
+
+            handle_response(response)
+            st.write(des_response['choices'][0]['text'])
+
+
+
+
 def interactive_plot(df):
     #x_axis_val = st.selectbox('Select X-Axis Value', options= df.columns)
     #y_axis_val = st.selectbox('Select Y-Axis Value', options= df.columns)
