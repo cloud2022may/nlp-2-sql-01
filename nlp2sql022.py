@@ -275,7 +275,7 @@ def create_describe_prompt(df):
     #
     # data: {}
     #
-    # can you describe the above data in a textual form and then state any assumptions and write a explanation or analysis about the data
+    # can you describe the above data in a textual form and then state any assumptions and write a explanation or analysis about the data, higher the number higher the value
     """.format(df)
 
     return prompt
