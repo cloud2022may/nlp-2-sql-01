@@ -53,14 +53,16 @@ def main():
 
     max_tokens_slider = st.sidebar.slider('Maximum no of tokens', 0, 300, 150)
     
-    st.write("Sample Sales Data")
+    #st.write("Sample Sales Data")
     
     #temp_file_path = "./nlp-2-sql-01/sales_data_sample.csv"
     temp_file_path = "./sales_data_sample.csv"
 
     df = pd.read_csv(temp_file_path)
     #st.write(df.head(5))
-    st.write(df)
+    
+    with st.expander("Sample Sales Data"):
+        st.write(df)
 
     
     with st.expander("Ask anything or try an example"):
@@ -72,7 +74,12 @@ def main():
         st.write("which country shipped maximum number of ships in 2005")
         st.write("which city in the USA shipped the least number of motorcycles in 2004")
 
-    nlp_text = prompt_input()
+
+     # container for the user's text input
+    container = st.container()
+
+    with container:
+        nlp_text = prompt_input()
     
     # connection to database
     db = pymysql.connect(host='database-1.cdatmsjowfie.us-east-1.rds.amazonaws.com',
@@ -81,100 +88,110 @@ def main():
                          database="db01")
     cursor = db.cursor()
 
+     # container for chat history
+    response_container = st.container()
 
+    with response_container:
 
-    if nlp_text is not None and nlp_text != "":
-        with st.spinner(text = "Analysis in progress..."):
-            
-        
-
-            prompt = combine_prompts(df, nlp_text)
-            #st.write(prompt) 
-
-            response = openai.Completion.create(
-                model = model_name_option, #"text-davinci-003",
-                prompt = prompt,
-                temperature = temperature_slider ,#0,
-                max_tokens = max_tokens_slider, #150,
-                top_p = 1.0,
-                frequency_penalty = 0,
-                presence_penalty = 0,
-                #stop = ['#',';']
-                stop = ['#']
-
-            )
-
-            #handle_response(response)
-            #st.write(response)
-
-            #try:
-            #st.write(text(handle_response(response)))
-            response_query = handle_response(response)
-            response_query = response_query.replace("dataTable", "sales" )
-            #response_query = response_query.replace("SELECT", "\n; SELECT" )
-            #response_query = response_query[ 2: ]
-            st.write(response_query)
-
-            st.write("Results ")
-
-            
-            query = handle_response(response)
-
-            response_query_checked = checkforSQLInjection(response_query)
-
-            ##### logging 
-            with open("log.txt","a") as file:
-
-                file.write(f"\n########\nuser input: {nlp_text} \n" )
-                file.write(f"generated query: {response_query} \n" )
-                file.write(f"response_query_checked: {response_query_checked} \n")
-            if response_query_checked != "stop":
-
-                cursor.execute(response_query_checked)
-                query_result = cursor.fetchall()
-                #query_result = dict(zip(cursor.column_names, cursor.fetchall()))
-
-                # Fetch the column names from the cursor.description
-                columns = [col[0] for col in cursor.description]
-                #st.write(columns)
-
-                df_query_result = pd.DataFrame(query_result)
-                df_query_result.columns = columns
-
-                #st.write(result.all())
-
-                st.write(df_query_result)
-
-                #interactive_plot(df_query_result)
+        if nlp_text is not None and nlp_text != "":
+            with st.spinner(text = "Analysis in progress..."):
                 
-                #if ( len(df_query_result.columns.values.tolist()) >= 2 ):
-                        #columns = ["column0", "column1"]
-                        #df_query_result.columns = columns
-                        
-                        #st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
+            
 
-                #opt = st.radio('Plot type:', ['Bar', 'Pie'])
-                #if opt == 'Bar':
-                #    fig = px.bar(df_query_result, x = df_query_result.columns.values[0], y = df_query_result.columns.values[1] , title="Bar Chart")
-                #    st.plotly_chart(fig)
-                #else:
-                #    fig = px.pie(df_query_result, names = df_query_result.columns.values[0], values = df_query_result.columns.values[1] , title="Pie Chart")
-                #    st.plotly_chart(fig)
+                prompt = combine_prompts(df, nlp_text)
+                #st.write(prompt) 
 
-                tab1, tab2, tab3 = st.tabs(["📈 Bar Chart", "📈 Pie Chart", "🗃 Data"])
+                response = openai.Completion.create(
+                    model = model_name_option, #"text-davinci-003",
+                    prompt = prompt,
+                    temperature = temperature_slider ,#0,
+                    max_tokens = max_tokens_slider, #150,
+                    top_p = 1.0,
+                    frequency_penalty = 0,
+                    presence_penalty = 0,
+                    #stop = ['#',';']
+                    stop = ['#']
 
-                tab1.fig = px.bar(df_query_result, x = df_query_result.columns.values[0], y = df_query_result.columns.values[1] , title="Bar Chart")
-                tab1.plotly_chart(tab1.fig)
+                )
 
-                tab2.fig = px.pie(df_query_result, names = df_query_result.columns.values[0], values = df_query_result.columns.values[1] , title="Pie Chart")
-                tab2.plotly_chart(tab2.fig)
+                #handle_response(response)
+                #st.write(response)
 
-                tab3.dataframe(df_query_result)
+                #try:
+                #st.write(text(handle_response(response)))
+                response_query = handle_response(response)
+                response_query = response_query.replace("dataTable", "sales" )
+                #response_query = response_query.replace("SELECT", "\n; SELECT" )
+                #response_query = response_query[ 2: ]
+                st.write(response_query)
 
+                st.write("Results ")
 
+                
+                query = handle_response(response)
 
+                response_query_checked = checkforSQLInjection(response_query)
 
+                ##### logging 
+                with open("log.txt","a") as file:
+
+                    file.write(f"\n########\nuser input: {nlp_text} \n" )
+                    file.write(f"generated query: {response_query} \n" )
+                    file.write(f"response_query_checked: {response_query_checked} \n")
+                if response_query_checked != "stop":
+
+                    cursor.execute(response_query_checked)
+                    query_result = cursor.fetchall()
+                    #query_result = dict(zip(cursor.column_names, cursor.fetchall()))
+
+                    # Fetch the column names from the cursor.description
+                    columns = [col[0] for col in cursor.description]
+                    #st.write(columns)
+
+                    df_query_result = pd.DataFrame(query_result)
+                    df_query_result.columns = columns
+
+                    #st.write(result.all())
+
+                    st.write(df_query_result)
+
+                    #interactive_plot(df_query_result)
+                    
+                    #if ( len(df_query_result.columns.values.tolist()) >= 2 ):
+                            #columns = ["column0", "column1"]
+                            #df_query_result.columns = columns
+                            
+                            #st.bar_chart(df_query_result , y = df_query_result.columns.values[1], x=df_query_result.columns.values[0])
+
+                    #opt = st.radio('Plot type:', ['Bar', 'Pie'])
+                    #if opt == 'Bar':
+                    #    fig = px.bar(df_query_result, x = df_query_result.columns.values[0], y = df_query_result.columns.values[1] , title="Bar Chart")
+                    #    st.plotly_chart(fig)
+                    #else:
+                    #    fig = px.pie(df_query_result, names = df_query_result.columns.values[0], values = df_query_result.columns.values[1] , title="Pie Chart")
+                    #    st.plotly_chart(fig)
+
+                    # check for column count
+                    if ( len(df_query_result.columns.values.tolist()) >= 2 ):
+
+                        tab1, tab2, tab3 = st.tabs(["📈 Bar Chart", "📈 Pie Chart", "🗃 Data"])
+
+                        tab1.fig = px.bar(df_query_result, x = df_query_result.columns.values[0], y = df_query_result.columns.values[1] , title="Bar Chart")
+                        tab1.plotly_chart(tab1.fig)
+
+                        tab2.fig = px.pie(df_query_result, names = df_query_result.columns.values[0], values = df_query_result.columns.values[1] , title="Pie Chart")
+                        tab2.plotly_chart(tab2.fig)
+
+                        tab3.dataframe(df_query_result)
+
+                #getExp = st.button('Fetch Explanation', on_click=getExplanationButtonCallback) 
+
+    #st.write(df_query_result.columns[1])
+    #st.write(df_query_result.sort_values(by=[df_query_result.columns[1]], ascending=False))
+    
+    #if nlp_text is not None and nlp_text != "":
     getExp = st.button('Fetch Explanation', on_click=getExplanationButtonCallback) 
+
 
     if getExp or st.session_state.load_state:
 
@@ -184,10 +201,10 @@ def main():
         
             ##### describe data in text
             describe_prompt = create_describe_prompt(df_query_result)
-
+            
             prompt = combine_prompts(df, nlp_text)
             #st.write(prompt) 
-            time.sleep(20)
+            time.sleep(10)
 
             des_response = openai.Completion.create(
                 model = model_name_option, #"text-davinci-003",
@@ -271,11 +288,12 @@ def combine_prompts(df, query_prompt):
     return definition + query_init_string
 
 def create_describe_prompt(df):
+    #df_sorted = df.sort_values(by=[df.columns[1]], ascending=False)
     prompt = """ 
     #
     # data: {}
     #
-    # can you describe the above data in a textual form and then state any assumptions and write a explanation or analysis about the data, higher the number higher the value
+    # can you describe the above data in a textual form, higher the sales higher the value and then state any assumptions and write a explanation or analysis about the data, higher the number higher the value
     """.format(df)
 
     return prompt
