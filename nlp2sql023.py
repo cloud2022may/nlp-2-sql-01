@@ -309,4 +309,5 @@ def create_describe_prompt(df):
     return prompt
 
 def getExplanationButtonCallback():
-        st.write("Button clicked")
+        st.write()
+        #st.write("Button clicked")

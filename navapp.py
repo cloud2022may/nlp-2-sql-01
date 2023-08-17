@@ -1,9 +1,9 @@
-import nlp2sql023
+import nlp2sql024
 import askcsv01
 import streamlit as st
 
 PAGES = {
-    "NLP 2 SQL": nlp2sql023,
+    "NLP 2 SQL": nlp2sql024,
     "Ask CSV": askcsv01
 }
 st.sidebar.title('Navigation')

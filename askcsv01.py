@@ -54,20 +54,27 @@ def app():
             tmp_file.write(user_csv.getvalue())
             tmp_file_path = tmp_file.name
 
-        user_question = st.text_input("Ask a question about your CSV data")
+        #user_question = st.text_input("Ask a question about your CSV data")
 
         llm = OpenAI(temperature=0 ,   openai_api_key = input_api_key ) #openai_api_key=openai.api_key)
         #st.write(openai.api_key)
         #agent = create_csv_agent(llm, user_csv, verbose=True)
         agent = create_csv_agent(llm, tmp_file_path, verbose=True)
 
-        if user_question is not None and user_question != "":
-            response = agent.run(user_question)
+        with container:
 
-            st.write(response)
+            with st.form(key="input_form", clear_on_submit=True):
 
-            st.session_state['past'].append(user_question)
-            st.session_state['generated'].append(response)
+                user_question = st.text_input("Ask a question about your CSV data:", placeholder="Query your csv data here", key="input")
+                submit_button = st.form_submit_button(label="Send")
+
+            if user_question is not None and user_question != "":
+                response = agent.run(user_question)
+
+                st.write(response)
+
+                st.session_state['past'].append(user_question)
+                st.session_state['generated'].append(response)
 
         
         if st.session_state['generated']:

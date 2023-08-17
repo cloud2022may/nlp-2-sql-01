@@ -9,4 +9,8 @@ pandasql
 PyMySQL
 #mysql
 #mysql-connector-python
+langchain
+streamlit_chat
+tabulate
+
 
