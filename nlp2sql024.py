@@ -33,7 +33,7 @@ def app():
     #openai.api_key = os.getenv("OPENAI_API_KEY")
     #st.set_page_config(page_title = "Ask questions to your data")
     st.header("Generative SQL")
-    st.header("Ask questions to your data")
+    st.header("Ask questions to your data ..")
 
     #################################
     with st.expander("About the app"):
