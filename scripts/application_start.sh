@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#give permission for everything in the express-app directory
+sudo chmod -R 777 /home/ubuntu/nlp-2-sql-01
+
 # navigate into our working directory
 
 #cd /home/ubuntu/nlp-2-sql-01
