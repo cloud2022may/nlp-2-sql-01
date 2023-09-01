@@ -28,4 +28,4 @@ cd /home/ubuntu/nlp-2-sql-01
 #install node modules
 npm install
 
-pyhton3 -m streamlit run ./navapp.py > navapp.out.log 2>navapp.err.log < /dev/null &
+python3 -m streamlit run ./navapp.py > navapp.out.log 2>navapp.err.log < /dev/null &
