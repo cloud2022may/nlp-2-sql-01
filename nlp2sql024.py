@@ -37,7 +37,7 @@ def app():
 
     #################################
     with st.expander("About the app"):
-        st.write("Ask questions to your data in natural language")
+        st.write("Ask questions to your data in natural language in conversation mode")
         #st.write("Please do not load any confidential or company data.")
         #st.write("Please make sure that the column names or headers in csv has no spaces or special characters.")
 
