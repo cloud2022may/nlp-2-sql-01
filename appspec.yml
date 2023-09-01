@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
 - source: /
-  destination: /home/ec2-user/express-app
+  destination: /home/ubuntu/nlp-2-sql-01
 hook:
   ApplicationStop:
     - location: scripts/application_stop.sh
