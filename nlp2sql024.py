@@ -12,6 +12,7 @@ from pandasql import sqldf
 import pymysql
 import time
 from streamlit_chat import message
+from gtts import gTTS
 
 st.set_page_config(page_title = "Ask questions to your data")
 
@@ -82,6 +83,11 @@ def app():
         st.write("which country shipped maximum number of ships in 2005")
         st.write("which city in the USA shipped the least number of motorcycles in 2004")
 
+    #st.sidebar.audio("sample-15s.mp3","mp3")
+    #audio_file = open('./assets/output.mp3', 'rb')
+    #audio_bytes = audio_file.read()
+
+    #st.sidebar.audio(audio_bytes, format='audio/mp3')
 
     ###############################
     if 'history' not in st.session_state:
@@ -231,6 +237,8 @@ def app():
                                         handle_response(response)
                                         st.write(des_response['choices'][0]['text'])
                                         
+                                        ## generate speech from text
+                                        generateSpeechfromText(des_response['choices'][0]['text'])
                                         
                                     ###### fetch explanation
             #####
@@ -271,6 +279,20 @@ def app():
 
 #    if __name__ == '__main__':
 #        main()
+def generateSpeechfromText(inputText):
+    language = 'en'
+
+    output = gTTS(text=inputText, lang=language, slow=False)
+
+    output.save("./assets/output.mp3")
+
+    if output:
+        audio_file = open('./assets/output.mp3', 'rb')
+        audio_bytes = audio_file.read()
+
+        st.sidebar.audio(audio_bytes, format='audio/mp3')
+
+
 
 def interactive_plot(df):
         #x_axis_val = st.selectbox('Select X-Axis Value', options= df.columns)
