@@ -17,15 +17,15 @@
 
 ############################ 1 way
 # change directory to where the nlptest script is there
-#cd /home/ubuntu
+cd /home/ubuntu
 
-#./nlptest.sh &
+nohup ./nlptest.sh &
 
 ###########################  2nd way
 # change directory to where the nlptest script is there
-cd /home/ubuntu/nlp-2-sql-01
+#cd /home/ubuntu/nlp-2-sql-01
 
 #install node modules
-npm install
+#npm install
 
-python3 -m streamlit run ./navapp.py > navapp.out.log 2>navapp.err.log < /dev/null &
+#python3 -m streamlit run ./navapp.py > navapp.out.log 2>navapp.err.log < /dev/null &
