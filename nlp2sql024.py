@@ -238,7 +238,7 @@ def app():
                                         st.write(des_response['choices'][0]['text'])
                                         
                                         ## generate speech from text
-                                        generateSpeechfromText(des_response['choices'][0]['text'])
+                                        #generateSpeechfromText(des_response['choices'][0]['text'])
                                         
                                     ###### fetch explanation
             #####
