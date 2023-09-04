@@ -290,7 +290,7 @@ def generateSpeechfromText(inputText):
         audio_file = open('./assets/output.mp3', 'rb')
         audio_bytes = audio_file.read()
 
-        st.sidebar.audio(audio_bytes, format='audio/mp3')
+        #st.sidebar.audio(audio_bytes, format='audio/mp3')
 
 
 
