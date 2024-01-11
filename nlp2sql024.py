@@ -55,7 +55,7 @@ def app():
 
     model_name_option = st.sidebar.selectbox(
         'Model',
-        ('text-davinci-003', 'text-davinci-002' )) #, 'davinci', 'curie', 'babbage', 'ada') )
+        ('gpt-3.5-turbo-instruct', 'text-davinci-003' )) #, 'davinci', 'curie', 'babbage', 'ada') )
 
     temperature_slider = st.sidebar.slider('Temperature', 0.0, 1.0, 0.0)    
 

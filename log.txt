@@ -1656,3 +1656,14 @@ FROM sales
 WHERE COUNTRY = 'USA'
 GROUP BY PRODUCTLINE
 ORDER BY TOTAL_SALES DESC; 
+
+########
+user input: Can you give the total sales by territory by desc sales 
+generated query: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY
+ORDER BY Total_Sales DESC; 
+response_query_checked: SELECT  TERRITORY, SUM(SALES) AS Total_Sales
+FROM sales
+GROUP BY TERRITORY
+ORDER BY Total_Sales DESC; 
